@@ -109,24 +109,24 @@ export default function SettingsPage() {
               تحكم في المواقع الظاهرة في لوحة التحكم وربط GA4 Property IDs
             </p>
           </div>
-          {sites.length > 0 && (
-            <div className="flex items-center gap-2 shrink-0 mt-1">
-              <button
-                onClick={() => toggleAll(true)}
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100 transition-all"
-              >
-                <Eye className="w-3.5 h-3.5" />
-                إظهار الكل
-              </button>
-              <button
-                onClick={() => toggleAll(false)}
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 transition-all"
-              >
-                <EyeOff className="w-3.5 h-3.5" />
-                إخفاء الكل
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-2 shrink-0 mt-1">
+            <button
+              onClick={() => toggleAll(true)}
+              disabled={loading || sites.length === 0}
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              إظهار الكل
+            </button>
+            <button
+              onClick={() => toggleAll(false)}
+              disabled={loading || sites.length === 0}
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <EyeOff className="w-3.5 h-3.5" />
+              إخفاء الكل
+            </button>
+          </div>
         </div>
 
         {loading ? (
