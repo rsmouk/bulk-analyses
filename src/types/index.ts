@@ -30,6 +30,10 @@ export interface SummaryStats {
   avg_ctr: number
   avg_position: number
   sites_count: number
+  total_page_views?: number
+  total_new_users?: number
+  avg_bounce_rate?: number
+  avg_session_duration?: number
 }
 
 export type DateRange = "7d" | "28d" | "90d"
