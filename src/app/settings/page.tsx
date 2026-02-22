@@ -49,6 +49,11 @@ export default function SettingsPage() {
     setSaving(null)
   }
 
+  async function toggleAll(visible: boolean) {
+    const targets = sites.filter((s) => s.is_visible !== visible)
+    await Promise.all(targets.map((s) => updateSite(s.id, { is_visible: visible })))
+  }
+
   function startEdit(site: Site, field: "name" | "ga4") {
     setEditingId(site.id)
     setEditField(field)
@@ -97,11 +102,31 @@ export default function SettingsPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h2 className="text-lg font-bold text-slate-800">إدارة المواقع</h2>
-          <p className="text-sm text-slate-500 mt-1">
-            تحكم في المواقع الظاهرة في لوحة التحكم وربط GA4 Property IDs
-          </p>
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-slate-800">إدارة المواقع</h2>
+            <p className="text-sm text-slate-500 mt-1">
+              تحكم في المواقع الظاهرة في لوحة التحكم وربط GA4 Property IDs
+            </p>
+          </div>
+          {sites.length > 0 && (
+            <div className="flex items-center gap-2 shrink-0 mt-1">
+              <button
+                onClick={() => toggleAll(true)}
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100 transition-all"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                إظهار الكل
+              </button>
+              <button
+                onClick={() => toggleAll(false)}
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 transition-all"
+              >
+                <EyeOff className="w-3.5 h-3.5" />
+                إخفاء الكل
+              </button>
+            </div>
+          )}
         </div>
 
         {loading ? (
