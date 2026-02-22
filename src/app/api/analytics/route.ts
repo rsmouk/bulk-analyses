@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { getGA4Data } from "@/lib/google"
-import { supabaseAdmin } from "@/lib/supabase"
+import { getSupabaseAdmin } from "@/lib/supabase"
 import { DateRange } from "@/types"
 
 export async function GET(req: NextRequest) {
@@ -16,8 +16,10 @@ export async function GET(req: NextRequest) {
   if (!userId) return NextResponse.json({ error: "No user ID" }, { status: 401 })
   const accessToken = session.access_token
 
+  const db = getSupabaseAdmin()
+
   // Get sites that have GA4 property IDs
-  const { data: sites } = await supabaseAdmin
+  const { data: sites } = await db
     .from("user_sites")
     .select("*")
     .eq("user_id", userId)

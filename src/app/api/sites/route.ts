@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
-import { supabaseAdmin } from "@/lib/supabase"
+import { getSupabaseAdmin } from "@/lib/supabase"
 
 // GET - fetch all user sites
 export async function GET() {
@@ -9,7 +9,8 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  const { data, error } = await supabaseAdmin
+  const db = getSupabaseAdmin()
+  const { data, error } = await db
     .from("user_sites")
     .select("*")
     .eq("user_id", session.user?.id ?? "")
@@ -29,7 +30,8 @@ export async function PATCH(req: NextRequest) {
   const body = await req.json()
   const { id, ...updates } = body
 
-  const { data, error } = await supabaseAdmin
+  const db = getSupabaseAdmin()
+  const { data, error } = await db
     .from("user_sites")
     .update(updates)
     .eq("id", id)

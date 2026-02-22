@@ -4,7 +4,7 @@ import {
   getSearchConsoleSites,
   getSearchConsoleData,
 } from "@/lib/google"
-import { supabaseAdmin } from "@/lib/supabase"
+import { getSupabaseAdmin } from "@/lib/supabase"
 import { DateRange } from "@/types"
 
 export async function GET(req: NextRequest) {
@@ -22,8 +22,10 @@ export async function GET(req: NextRequest) {
   // Get sites from Search Console
   const gscSites = await getSearchConsoleSites(accessToken)
 
+  const db = getSupabaseAdmin()
+
   // Get saved sites from Supabase
-  const { data: savedSites } = await supabaseAdmin
+  const { data: savedSites } = await db
     .from("user_sites")
     .select("*")
     .eq("user_id", userId)
@@ -35,7 +37,7 @@ export async function GET(req: NextRequest) {
   )
 
   if (newSites.length > 0) {
-    await supabaseAdmin.from("user_sites").insert(
+    await db.from("user_sites").insert(
       newSites.map((s) => ({
         user_id: userId,
         site_url: s.siteUrl,
@@ -47,7 +49,7 @@ export async function GET(req: NextRequest) {
   }
 
   // Fetch all sites again after sync
-  const { data: allSites } = await supabaseAdmin
+  const { data: allSites } = await db
     .from("user_sites")
     .select("*")
     .eq("user_id", userId)
