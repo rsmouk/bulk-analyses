@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
         metrics: [{ name: "totalUsers" }],
         dimensions: [{ name: "country" }],
         orderBys: [{ metric: { metricName: "totalUsers" }, desc: true }],
-        limit: 10,
+        limit: "10",
       },
     })
 

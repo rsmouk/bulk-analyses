@@ -88,8 +88,8 @@ export function ChartsSection({ siteUrl, dateRange }: ChartsProps) {
                 <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} tickLine={false} axisLine={false} />
                 <Tooltip
                   contentStyle={{ borderRadius: "8px", border: "1px solid #e2e8f0", fontSize: "12px" }}
-                  formatter={(value: number, name: string) => [
-                    name === "impressions" ? value * 10 : value,
+                  formatter={(value: number | undefined, name: string | undefined) => [
+                    name === "impressions" ? (value ?? 0) * 10 : (value ?? 0),
                     name === "clicks" ? "ضغطات" : "ظهور (÷10)",
                   ]}
                 />

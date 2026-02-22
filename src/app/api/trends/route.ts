@@ -54,7 +54,6 @@ export async function GET(req: NextRequest) {
         endDate,
         dimensions: ["query"],
         rowLimit: 10,
-        orderBy: [{ fieldName: "clicks", sortOrder: "DESCENDING" }],
       },
     })
 
@@ -66,7 +65,6 @@ export async function GET(req: NextRequest) {
         endDate,
         dimensions: ["page"],
         rowLimit: 10,
-        orderBy: [{ fieldName: "clicks", sortOrder: "DESCENDING" }],
       },
     })
 
